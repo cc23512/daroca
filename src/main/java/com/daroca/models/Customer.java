@@ -6,13 +6,16 @@ import jakarta.persistence.*;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer customerId;
 
     @Column(length = 50, nullable = false)
     private String name;
 
     @Column(length = 100)
-    private String email;
+    private String city;
+
+    @Column(length = 100)
+    private String state;
 
     @Column
     private Double latitude;
@@ -20,19 +23,20 @@ public class Customer {
     @Column
     private Double longitude;
 
-    public Customer(Integer id, String name, String email, Double latitude, Double longitude){
-        this.id = id;
+    public Customer(Integer customerId, String name, String city, String state, Double latitude, Double longitude){
+        this.customerId = customerId;
         this.name = name;
-        this.email = email;
+        this.city = city;
+        this.state = state;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCustomerId() {
+        return customerId;
     }
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -42,11 +46,18 @@ public class Customer {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getCity() {
+        return city;
     }
-    public String getEmail() {
-        return email;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+    public void setState(String state) {
+        this.state = state;
     }
 
     public Double getLatitude() {
@@ -64,10 +75,10 @@ public class Customer {
     }
 
     public boolean equals(Customer other) {
-        return this.id.equals(other.getId()) && this.name.equals(other.getName());
+        return this.customerId.equals(other.getCustomerId()) && this.name.equals(other.getName());
     }
 
     public String toString() {
-        return "Customer[id = " + this.id + ", name = " + this.name + "]";
+        return "Customer[id = " + this.customerId + ", name = " + this.name + "]";
     }
 }

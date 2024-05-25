@@ -14,13 +14,14 @@ public class CustomerController {
     @Autowired
     private CustomerRepository repository;
 
-    @GetMapping
-    public List<Customer> getAll(){
+
+    @GetMapping("/customers")
+    public List<Customer> all(){
         return repository.findAll();
     }
 
     @GetMapping("/customers/{id}")
-    public Optional<Customer> getById(@PathVariable Integer id){
+    public Optional<Customer> one(@PathVariable Integer id){
         return repository.findById(id);
     }
 
@@ -29,24 +30,24 @@ public class CustomerController {
         repository.deleteById(id);
     }
 
-    @PostMapping
-    public Customer save(@RequestBody Customer newCustomer){
+    @PostMapping public Customer save(@RequestBody Customer newCustomer){
         return repository.save(newCustomer);
     }
 
-    @PutMapping
-    public Customer update(@RequestBody Customer newCustomer, @PathVariable Integer id){
-        Optional<Customer> oldCustomer = repository.findById(id);
-        if (oldCustomer.isPresent()){
-            Customer c = oldCustomer.get();
-            c.setName(newCustomer.getName());
-            c.setEmail(newCustomer.getEmail());
-            c.setLatitude(newCustomer.getLatitude());
-            c.setLongitude(newCustomer.getLongitude());
-            repository.save(c);
-        }
+    @PutMapping("/customers/{id}")
+    public Customer replace(@RequestBody Customer newCustomer, @PathVariable Integer id){
+        /* SELECT * FROM Customer WHERE id = {id} */
+        return repository.findById(id)
+                .map(customer -> {
+                   customer.setName(newCustomer.getName());
+                   customer.setCity(newCustomer.getCity());
+                   customer.setState(newCustomer.getState());
+                   customer.setLatitude(newCustomer.getLatitude());
+                   customer.setLongitude(newCustomer.getLongitude());
+                   return repository.save(customer);
+                })
+                .orElseGet(() -> {
+                    return  repository.save(newCustomer);
+                });
     }
-
-
-
 }
