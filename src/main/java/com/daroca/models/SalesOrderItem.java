@@ -21,4 +21,38 @@ public class SalesOrderItem {
     @Column(nullable = false)
     private Integer quantity;
 
+    public SalesOrderItem(){
+        // default constructor
+    }
+
+    public SalesOrderItem(SalesOrder salesOrder, Product product, Integer quantity){
+        this.salesOrder = salesOrder;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public SalesOrder getSalesOrder() {
+        return salesOrder;
+    }
+
+    public void setSalesOrder(SalesOrder salesOrder) {
+        this.salesOrder = salesOrder;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
 }
